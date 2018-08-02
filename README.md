@@ -1,7 +1,8 @@
 # wxsp-components
 微信小程序常用组件
-
-## tab选项卡
+1. [选项卡](#tab)
+## tab
+选项卡
 ### wxml
 ```
 <view class='flex align-items-center tab'>
