@@ -97,17 +97,38 @@ Page({
     width: 80%;
 }
 ```
+### 上一个页面跳转进来之前储存的参数
+```
+// 比如上一个页面为 `/pages/goodDetail/goodDetail`
+// 需要的参数为 `id = options.id type = options.type`
+
+let url = `/pages/goodDetail/goodDetail?id=${options.id}&type=${options.type}`
+          let params = `id=${options.id}&type=${options.type}`
+wx.setStorageSync('loginUrl', '/pages/goodDetail/goodDetail')
+wx.setStorageSync('loginParams', params)
+wx.setStorageSync('loginToType', 'redirectTo')
+// 跳到登录页
+wx.navigateTo({
+    url: '/pages/login/login',
+})
+```
 ### js
 ```
 // pages/login/login.js
+const app = getApp();
 Page({
     data: {
         canIUse: wx.canIUse('button.open-type.getUserInfo')
     },
     onLoad: function (options) {
-        let url = options.url
+        let that = this
+        let url = wx.getStorageSync('loginUrl')
+        let params = wx.getStorageSync('loginParams')
+        let loginToType = wx.getStorageSync('loginToType')
         this.setData({
-            url
+            url,
+            params,
+            loginToType
         })
         // 查看是否授权
         wx.getSetting({
@@ -117,9 +138,19 @@ Page({
                     wx.getUserInfo({
                         success: function (res) {
                             console.log(res.userInfo)
-                            wx.navigateTo({
-                                url: url,
-                            })
+
+                            // 跳转
+                            switch (loginToType) {
+                                case 'switchTab':
+                                    wx.switchTab({
+                                        url: url,
+                                    })
+                                    break;
+                                default:
+                                    wx.redirectTo({
+                                        url: url + '?' + params,
+                                    })
+                            }
                         }
                     })
                 }
@@ -128,10 +159,30 @@ Page({
     },
     bindGetUserInfo: function (e) {
         console.log(e.detail.userInfo)
-        let url = this.data.url
-        wx.redirectTo({
-            url: url,
-        })
+        if (e.detail.userInfo) {
+            let that = this
+            let url = this.data.url
+            let loginToType = this.data.loginToType
+            let params = this.data.params
+            
+            // 跳转
+            switch (loginToType) {
+                case 'switchTab':
+                    wx.switchTab({
+                        url: url,
+                    })
+                    break;
+                default:
+                    wx.redirectTo({
+                        url: url + '?' + params,
+                    })
+            }
+        }else{
+            wx.showToast({
+                title: '请授权登录',
+                icon: 'none',
+            })
+        }
     }
 })
 ```
