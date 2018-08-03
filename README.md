@@ -99,11 +99,12 @@ Page({
 ```
 ### 上一个页面跳转进来之前储存的参数
 ```
-// 比如上一个页面为 `/pages/goodDetail/goodDetail`
-// 需要的参数为 `id = options.id type = options.type`
+// 比如上一个页面为 /pages/goodDetail/goodDetail
+// 需要的参数为 id = options.id type = options.type
 
 let url = `/pages/goodDetail/goodDetail?id=${options.id}&type=${options.type}`
-          let params = `id=${options.id}&type=${options.type}`
+let params = `id=${options.id}&type=${options.type}`
+
 wx.setStorageSync('loginUrl', '/pages/goodDetail/goodDetail')
 wx.setStorageSync('loginParams', params)
 wx.setStorageSync('loginToType', 'redirectTo')
