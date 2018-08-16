@@ -9,9 +9,7 @@
 ### wxml
 ```
 <view class='flex align-items-center tab'>
-    <view class="{{active == 1?'active':''}}" bindtap='switchTab' data-type='1'>选项一</view>
-    <view class="{{active == 2?'active':''}}" bindtap='switchTab' data-type='2'>选项二</view>
-    <view class="{{active == 3?'active':''}}" bindtap='switchTab' data-type='3'>选项三</view>
+    <view wx:for="{{tabs}}" wx:key="tabs" class="{{active == index?'active':''}}" bindtap='switchTab' data-type='{{index}}'>选项一</view>
 </view>
 ```
 ### css
@@ -45,7 +43,8 @@ Page({
      * 页面的初始数据
      */
     data: {
-        active: 1,
+        active: 0,
+        tabs: ['选项一','选项二'],
     },
 
     /**
