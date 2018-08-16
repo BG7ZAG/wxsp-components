@@ -9,7 +9,7 @@
 ### wxml
 ```
 <view class='flex align-items-center tab'>
-    <view wx:for="{{tabs}}" wx:key="tabs" class="{{active == index?'active':''}}" bindtap='switchTab' data-type='{{index}}'>选项一</view>
+    <view wx:for="{{tabs}}" wx:key="tabs" class="{{active == index?'active':''}}" bindtap='switchTab' data-type='{{index}}'>{{item}}</view>
 </view>
 ```
 ### css
