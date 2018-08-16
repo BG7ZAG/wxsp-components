@@ -2,6 +2,7 @@
 微信小程序常用组件
 1. [选项卡](#tab)
 2. [登录](#login)
+2. [验证码](#code)
 ## tab
 
 选项卡
@@ -186,4 +187,47 @@ Page({
         }
     }
 })
+```
+## code
+验证码
+### JS
+```
+// pages/login/login.js
+Page({
+
+    /**
+    * 页面的初始数据
+    */
+    data: {
+        count: 60,
+        isGetCode: true,
+    },
+    /**
+        * 获取验证码
+        */
+    getCode:function(e){
+        if(this.data.isGetCode){
+            this.setData({
+                isGetCode: false
+            })
+            countTime(this, 60)
+        }
+    },
+})
+// 倒计时
+function countTime(that, e) {
+    if (e == 0) {
+        that.setData({
+            isGetCode: true
+        })
+        return
+    }
+    e--
+    that.setData({
+        count: e
+    })
+    setTimeout(()=>{
+        countTime(that, e)
+    },1000)
+}
 ```
