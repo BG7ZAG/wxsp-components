@@ -190,6 +190,10 @@ Page({
 ```
 ## code
 验证码
+### WXML
+```
+<view class="{{isGetCode?'color':''}}" bindtap='getCode'>{{isGetCode?'获取验证码': count+ 's后重新获取'}}</view>
+```
 ### JS
 ```
 // pages/login/login.js
